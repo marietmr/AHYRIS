@@ -1,0 +1,616 @@
+/* ==========================================================================
+   AHYRIS — page d'attente
+   Ordre du fichier = ordre de la page :
+   base → header → intro → qui suis-je → projets → bandeau en direct
+   → termes + modale → footer → animations → mobile
+   ========================================================================== */
+
+
+/* ---------- Variables ---------- */
+
+:root {
+    /* Couleurs */
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --text: #4b5563;      /* texte courant sur fond sauge */
+    --muted: #6b7280;     /* texte secondaire */
+    --faint: #a3a3a3;     /* point "hors ligne" */
+    --subtle: #bbbbbb;    /* copyright */
+    --accent: #111111;    /* boutons */
+    --on-accent: #ffffff;
+    --sage: #97a391;
+    --sage-deep: #5f6d59;
+    --sage-soft: #eef1ec;
+    --border: #e5e7eb;
+    --live: #16a34a;
+
+    /* Formes et espacements */
+    --radius: 10px;                          /* boutons */
+    --radius-lg: 16px;                       /* boîtes et modale */
+    --box-pad: clamp(1.5rem, 4vw, 2.25rem);  /* marge intérieure des boîtes */
+    --gap-box: 3rem;                         /* écart entre deux boîtes */
+    --gap-block: 1.5rem;                     /* écart entre deux blocs dans une boîte */
+}
+
+
+/* ---------- Base ---------- */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html, body {
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 2rem clamp(1rem, 5vw, 4rem);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: clamp(3rem, 8vh, 5.5rem) 0;
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Icônes SVG au trait fin (1.5) : elles prennent la taille et la couleur du texte */
+.icon {
+    width: 1.1em;
+    height: 1.1em;
+    flex: none;
+    vertical-align: -.2em;
+}
+
+/* Petit libellé en majuscules, commun à « Qui suis-je ? », « Carte en direct »
+   et au sur-titre des modales */
+.label {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+}
+
+
+/* ---------- Header ---------- */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* L'image a une hauteur fixe : même taille sur tous les écrans */
+.img-logo {
+    display: block;
+    height: 40px;
+    width: auto;
+}
+
+.socials {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.socials a {
+    font-size: .78rem;
+    letter-spacing: .04em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+}
+
+.socials a:hover {
+    color: var(--ink);
+}
+
+
+/* ---------- Intro : une ouverture, pas une boîte ---------- */
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 560px;
+    margin: 0 auto clamp(3.5rem, 9vh, 5.5rem);
+}
+
+/* Titre → sous-titre serrés (un bloc), puis trait et texte à égale distance.
+   Le décalage à gauche compense l'espacement ajouté après la dernière lettre :
+   sans lui, le mot serait légèrement décentré. */
+.intro h1 {
+    font-weight: 300;
+    font-size: clamp(3rem, 9vw, 5.2rem);
+    letter-spacing: .18em;
+    line-height: 1;
+    margin: 0 0 1rem .18em;
+}
+
+.intro-eyebrow {
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: var(--gap-block);
+    padding-left: .3em; /* même compensation que pour le titre */
+}
+
+.intro-rule {
+    width: 48px;
+    height: 1px;
+    background: var(--sage);
+    margin-bottom: var(--gap-block);
+}
+
+.intro-text {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+
+.intro-next {
+    margin-top: 2.5rem;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+}
+
+.intro-next .icon {
+    margin-left: .35rem;
+    transition: transform .2s;
+}
+
+.intro-next:hover {
+    color: var(--ink);
+}
+
+.intro-next:hover .icon {
+    transform: translateY(3px);
+}
+
+
+/* ---------- Qui suis-je ? ----------
+   Une boîte, mais pas une carte projet : fond sauge pâle, sans ombre.
+   Même largeur, même arrondi et même marge intérieure que les cartes. */
+
+.about {
+    width: 100%;
+    text-align: left;
+    padding: var(--box-pad);
+    background: var(--sage-soft);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--gap-box);
+}
+
+.about-label {
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.about-body p {
+    font-size: 1.02rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--text);
+}
+
+.about-body p + p {
+    margin-top: .75rem;
+}
+
+
+/* ---------- Cartes projets ---------- */
+
+.project {
+    width: 100%;
+    text-align: left;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--gap-box);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .03), 0 12px 32px -18px rgba(95, 109, 89, .35);
+}
+
+/* La dernière carte n'ajoute pas sa marge au padding bas de <main> */
+.project:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Arrivée du lien « Découvrir les projets » : un peu d'air au-dessus de la carte */
+#projets {
+    scroll-margin-top: 1.5rem;
+}
+
+.project-body {
+    padding: var(--box-pad);
+}
+
+.project h2 {
+    font-weight: 400;
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    letter-spacing: .04em;
+    line-height: 1.1;
+    margin-bottom: .35rem;
+}
+
+.project-tagline {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--sage);
+    margin-bottom: 1.25rem;
+}
+
+/* Pleine largeur : même bord droit que la liste de fonctionnalités en dessous */
+.project-text {
+    font-size: .97rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-bottom: var(--gap-block);
+}
+
+.features {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: .65rem 1.5rem;
+    margin-bottom: var(--gap-block);
+}
+
+.features li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: .88rem;
+    line-height: 1.5;
+}
+
+.features li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sage);
+}
+
+/* Technos : sans fond ni padding, la première s'aligne sur le texte au-dessus */
+.stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem 1.25rem;
+    margin-bottom: var(--gap-block);
+}
+
+.stack span {
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .03em;
+    color: var(--sage-deep);
+}
+
+.cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .8rem 1.4rem;
+    background: var(--accent);
+    color: var(--on-accent);
+    text-decoration: none;
+    border-radius: var(--radius);
+    font-size: .85rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    transition: opacity .2s, transform .15s;
+}
+
+.cta:hover {
+    opacity: .85;
+    transform: translateY(-1px);
+}
+
+.cta .arrow {
+    transition: transform .2s;
+}
+
+.cta:hover .arrow {
+    transform: translateX(3px);
+}
+
+.cta:hover .arrow-out {
+    transform: translate(2px, -2px);
+}
+
+
+/* ---------- Bandeau « en direct » (carte DEWPOINT) ----------
+   Alimenté par l'API publique de la carte, voir js/main.js */
+
+.live {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding: 1.1rem var(--box-pad);
+    background: var(--sage-soft);
+    border-top: 1px solid var(--border);
+}
+
+.live-label {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.live-sub {
+    display: block;
+    margin-top: .1rem;
+    font-size: .75rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--muted);
+}
+
+.dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--faint);
+}
+
+.live.is-live .dot {
+    background: var(--live);
+    animation: pulse 2s infinite;
+}
+
+.metrics {
+    display: flex;
+    gap: clamp(1rem, 4vw, 2rem);
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric b {
+    font-weight: 400;
+    font-size: 1.45rem;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+
+.metric small {
+    font-size: .68rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+
+/* ---------- Termes techniques cliquables ----------
+   Le mot lui-même, souligné. Au survol, le soulignement monte et devient un
+   surlignage sauge (deux dégradés : le trait fin, et le surlignage par-dessus). */
+
+.term {
+    font: inherit;
+    font-weight: 500;
+    color: var(--sage-deep);
+    background:
+        linear-gradient(var(--sage-soft), var(--sage-soft)) no-repeat 0 100% / 100% 0,
+        linear-gradient(var(--sage), var(--sage)) no-repeat 0 100% / 100% 1.5px;
+    border: none;
+    border-radius: 3px;
+    padding: 0 .15em;
+    margin: 0 -.15em;
+    cursor: pointer;
+    transition: background-size .25s ease, color .2s;
+}
+
+.term:hover,
+.term:focus-visible {
+    background-size: 100% 100%, 100% 1.5px;
+    color: var(--ink);
+    outline: none;
+}
+
+.term:active {
+    background-size: 100% 100%, 100% 100%;
+    color: var(--on-accent);
+}
+
+
+/* ---------- Modale d'explication ---------- */
+
+.info-modal {
+    margin: auto;
+    width: min(360px, calc(100% - 2rem));
+    padding: 1.5rem 1.5rem 1.35rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    color: var(--ink);
+    text-align: left;
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, .3);
+}
+
+.info-modal[open] {
+    animation: popIn .2s ease both;
+}
+
+.info-modal::backdrop {
+    background: rgba(26, 26, 26, .25);
+    backdrop-filter: blur(2px);
+}
+
+.info-kicker {
+    margin-bottom: .3rem;
+}
+
+.info-modal h3 {
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    margin-bottom: .6rem;
+    padding-right: 1.5rem; /* place pour la croix */
+}
+
+.info-text {
+    font-size: .88rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+.info-close {
+    position: absolute;
+    top: .7rem;
+    right: .8rem;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.info-close .icon {
+    width: 18px;
+    height: 18px;
+}
+
+.info-close:hover {
+    background: var(--sage-soft);
+    color: var(--ink);
+}
+
+
+/* ---------- Bas de page ---------- */
+
+/* « Psst ! D'autres projets arrivent » */
+.description {
+    max-width: 500px;
+    margin: 0 auto 3rem;
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--muted);
+}
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem; /* = padding-bottom du header : les deux bordures respirent pareil */
+    border-top: 1px solid var(--border);
+}
+
+.footer-copy {
+    font-size: .78rem;
+    color: var(--subtle);
+}
+
+/* Même style que les liens réseaux du header */
+.to-top {
+    font-size: .78rem;
+    letter-spacing: .04em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+}
+
+.to-top .icon {
+    margin-left: .25rem;
+    transition: transform .2s;
+}
+
+.to-top:hover {
+    color: var(--ink);
+}
+
+.to-top:hover .icon {
+    transform: translateY(-2px);
+}
+
+
+/* ---------- Animations ---------- */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: translateY(8px) scale(.97); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(22, 163, 74, .45); }
+    70%  { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+/* Apparition en cascade, de haut en bas */
+.intro       { animation: fadeUp .7s ease both; }
+.intro h1    { animation: fadeUp .6s .1s ease both; }
+.about       { animation: fadeUp .6s .2s ease both; }
+.description { animation: fadeUp .6s .2s ease both; }
+.project     { animation: fadeUp .6s .3s ease both; }
+
+/* Le visiteur a demandé moins de mouvement à son système : on coupe tout */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 480px) {
+    .page { padding: 1.5rem 1rem; }
+    .img-logo { height: 32px; }
+    header .socials { gap: .9rem; }
+    .description { font-size: .92rem; margin-bottom: 2.25rem; }
+    .cta { width: 100%; justify-content: center; }
+    .metrics { width: 100%; justify-content: space-between; }
+}

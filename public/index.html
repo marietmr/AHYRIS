@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AHYRIS</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png"/>
+    <meta name="description" content="Le portfolio de Marie Tomor arrive bientôt. En attendant : DEWPOINT, supervision hygrométrique en temps réel."/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/style.css"/>
+    <script src="/js/main.js" defer></script>
+</head>
+<body>
+
+<div class="page">
+
+    <header>
+        <a class="logo" href="/">
+            <img class="img-logo" src="./img/favicon.png" alt="">
+        </a>
+        <nav class="socials" aria-label="Réseaux">
+            <a href="https://www.linkedin.com/in/marie-tomor">LinkedIn</a>
+            <a href="https://github.com/marietmr">GitHub</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="intro" aria-labelledby="intro-title">
+            <h1 id="intro-title">AHYRIS</h1>
+            <p class="intro-eyebrow">Portfolio de projets informatiques</p>
+            <span class="intro-rule" aria-hidden="true"></span>
+
+            <p class="intro-text">
+                Je vous souhaite la bienvenue sur AHYRIS, un recueil d'idées qui ont pris forme, ligne après ligne,
+                et qui continuera de grandir au fil de mon apprentissage.
+            </p>
+
+            <a class="intro-next" href="#projets">Découvrir les projets <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+        </section>
+
+        <section class="about" aria-labelledby="about-title">
+            <h2 class="label about-label" id="about-title">Qui suis-je&nbsp;?</h2>
+            <div class="about-body">
+                <p>
+                    Je m'appelle Marie Tomor et je suis actuellement en bachelier en informatique,
+                    orientation réseaux et télécommunications.
+                </p>
+                <p>
+                    J'ai commencé à coder en 2024, surtout en front-end. C'est pendant le stage qui
+                    concluait ma formation chez BeCode que le back-end a fait tilt&nbsp;: c'est là que
+                    j'ai décidé de me lancer dans des études en informatique.
+                </p>
+                <p>
+                    Ce que j'aime, c'est suivre un projet de bout en bout&nbsp;: de l'idée jusqu'à
+                    la mise en ligne, en passant par la base de données, le serveur, et surtout le matériel.
+                </p>
+            </div>
+        </section>
+
+        <article class="project" id="projets" aria-labelledby="dewpoint-title">
+            <div class="project-body">
+                <h2 id="dewpoint-title">DEWPOINT</h2>
+                <p class="project-tagline">Supervision hygrométrique, en temps réel.</p>
+
+                <p class="project-text">
+                    Un capteur Raspberry Pi mesure la température et l'humidité et envoie ses relevés
+                    à une application codée en Java. Celle-ci calcule le point de rosée, place chaque capteur sur une
+                    carte et prévient dès qu'un capteur se tait ou renvoie des informations erronées.
+                    <br>
+                    Du capteur à la carte, tout est fait main.
+                </p>
+
+                <ul class="features">
+                    <li>Carte publique des sites et de leurs capteurs</li>
+                    <li>Point de rosée et écart à la buée (formule de Magnus)</li>
+                    <li>Relevés signés <button class="term" type="button" data-info="hmac" aria-haspopup="dialog">HMAC</button>&nbsp;: aucune donnée falsifiable en transit</li>
+                    <li><button class="term" type="button" data-info="watchdog" aria-haspopup="dialog">Watchdog</button> qui ouvre et referme les alertes tout seul</li>
+                    <li>Historique&nbsp;: 3 derniers jours, tendances 7&nbsp;j / 30&nbsp;j / 12&nbsp;mois</li>
+                    <li>Application installable (<button class="term" type="button" data-info="pwa" aria-haspopup="dialog">PWA</button>) avec notifications push</li>
+                </ul>
+
+                <div class="stack" aria-label="Technologies">
+                    <span>Java 25</span>
+                    <span>Spring Boot 4</span>
+                    <span>PostgreSQL</span>
+                    <span>Flyway</span>
+                    <span>Leaflet</span>
+                    <span>Raspberry Pi · AHT20</span>
+                    <span>Docker · Caddy</span>
+                </div>
+
+                <a class="cta" href="/dewpoint/">Voir la carte en direct <svg class="icon arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+
+            <div class="live" id="live" aria-live="polite">
+                <div class="label live-label">
+                    <span class="dot" aria-hidden="true"></span>
+                    <div>
+                        <span id="live-title">Dernier relevé</span>
+                        <span class="live-sub" id="live-sub">Connexion au capteur…</span>
+                    </div>
+                </div>
+                <div class="metrics" id="live-metrics" hidden>
+                    <div class="metric"><b id="m-temp">–</b><small>Température</small></div>
+                    <div class="metric"><b id="m-hum">–</b><small>Humidité</small></div>
+                    <div class="metric"><b id="m-dew">–</b><small>Point de rosée</small></div>
+                </div>
+            </div>
+        </article>
+
+        <article class="project" aria-labelledby="todo-title">
+            <div class="project-body">
+                <h2 id="todo-title">TO-DO LIST</h2>
+                <p class="project-tagline">Mon premier projet en React.</p>
+
+                <p class="project-text">
+                    Une liste de tâches où chacune a sa date et son heure. On ajoute, on coche,
+                    on fait le ménage en un clic, et tout reste en mémoire dans le navigateur,
+                    même après l'avoir fermé.
+                    <br>
+                    C'est le projet qui m'a fait découvrir React.
+                </p>
+
+                <ul class="features">
+                    <li>Ajout de tâches avec date et heure (sélecteur de date)</li>
+                    <li>Cocher une tâche, ou toutes d'un coup</li>
+                    <li>Supprimer les tâches terminées, ou tout vider</li>
+                    <li>Sauvegarde automatique dans le <button class="term" type="button" data-info="localstorage" aria-haspopup="dialog">localStorage</button></li>
+                    <li>État de l'application géré avec les <button class="term" type="button" data-info="hooks" aria-haspopup="dialog">hooks</button> React</li>
+                    <li>Découpage en composants réutilisables</li>
+                </ul>
+
+                <div class="stack" aria-label="Technologies">
+                    <span>React 18</span>
+                    <span>JavaScript · JSX</span>
+                    <span>Vite</span>
+                    <span>react-datepicker</span>
+                    <span>CSS</span>
+                </div>
+
+                <a class="cta" href="https://todolist-app-mt.netlify.app/" target="_blank" rel="noopener">Essayer l'app <svg class="icon arrow arrow-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+            </div>
+        </article>
+
+        <dialog class="info-modal" id="info-modal" aria-labelledby="info-title">
+            <p class="label info-kicker" id="info-kicker"></p>
+            <h3 id="info-title"></h3>
+            <p class="info-text" id="info-text"></p>
+            <button class="info-close" type="button" aria-label="Fermer"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </dialog>
+    </main>
+
+    <p class="description">
+        Psst ! D'autres projets arrivent, restez connectés !
+    </p>
+
+    <footer>
+        <span class="footer-copy">&copy; <span id="year"></span> Marie Tomor</span>
+        <a class="to-top" href="#top">Haut de page <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a>
+    </footer>
+
+</div>
+
+</body>
+</html>
